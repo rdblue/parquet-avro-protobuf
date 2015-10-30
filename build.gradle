@@ -1,0 +1,36 @@
+buildscript {
+  repositories {
+    mavenLocal()
+    mavenCentral()
+  }
+  dependencies {
+    classpath 'com.google.protobuf:protobuf-gradle-plugin:0.7.0'
+  }
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'com.google.protobuf'
+
+repositories {
+  mavenLocal()
+  mavenCentral()
+}
+
+idea {
+  module {
+    sourceDirs += file('build/generated/source/proto')
+    // build is excluded by default, but must be included to find the proto classes
+    excludeDirs -= file('build')
+  }
+}
+
+dependencies {
+  compile 'org.apache.hadoop:hadoop-client:2.6.0'
+  compile 'org.apache.parquet:parquet-avro:1.8.1'
+  compile 'org.apache.avro:avro:1.7.7'
+  compile 'org.apache.avro:avro-protobuf:1.7.7'
+  compile 'com.google.protobuf:protobuf-java:2.5.0'
+
+  testCompile 'junit:junit:4.12'
+}
